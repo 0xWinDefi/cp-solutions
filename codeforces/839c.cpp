@@ -12,12 +12,10 @@ int leaf;
 
 void dfsl(int p){
     visited[p]=true;
-    bool isleaf=true;
-    //if(adj[p].size()==0) leaf++;
+    if(adj[p].size()==0) leaf++;
     for(int c: adj[p]){
-        if(!visited[c]) { dfsl(c); isleaf=false;}
+        if(!visited[c])  dfsl(c);
     }
-    if(isleaf) leaf++;
 }
 
 double dfs(int p){
@@ -25,11 +23,11 @@ double dfs(int p){
     double ans=0;
     for(int c: adj[p]){
         if(!visited[c]){
-            ans += (dfs(c) + 1.0/leaf);
+            ans += dfs(c)/leaf;
         }
     }
-    //int len = adj[p].size();
-    //ans += len/leaf;
+    int len = adj[p].size();
+    ans += len/leaf;
     return ans;
 }
 
@@ -45,8 +43,8 @@ int main(){
     leaf=0;
     memset(visited, false, sizeof visited);
     dfsl(1);
-    //cout<<leaf;
+    
     memset(visited, false, sizeof visited);
-    printf("%.15f",dfs(1));
+    cout<<dfs(1);
 
 }

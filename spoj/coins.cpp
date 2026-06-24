@@ -1,33 +1,23 @@
-#include<bits/stdc++.h>
+# include<bits/stdc++.h>
+
+typedef long long  ll;
 
 using namespace std;
+map<int, ll> a;
+ll solve(ll n){
+    if(n==0) return 0;
+    if(a[n]!=0) return a[n];
 
-int dp[1000008];
-bool done[1000008];
+    a[n/2] = solve(n/2);
+    a[n/3] = solve(n/3);
+    a[n/4] = solve(n/4);
 
-int k,l;
-
-bool solve(int n){
-    if(n==1 || n==k || n==l) return true;
-    else if(done[n])return dp[n];
-    else{
-        done[n]=true;
-        if(n>=l)
-        return dp[n] = !(solve(n-1) && solve(n-k) && solve(n-l));
-        else if(n>=k)
-        return dp[n] = !(solve(n-1) && solve(n-k));
-        else
-        return dp[n] = !solve(n-1);
-    }
+    return max(n,(a[n/2]+a[n/3]+a[n/4]));
 }
 
 int main(){
-    int m;
-    memset(done,false,sizeof(done));
-    memset(dp,false,sizeof(dp));
-    cin>>k>>l>>m;
-    for(int i=0; i<m; i++){
-        int ele; cin>>ele;
-        cout<<(solve(ele)?"A":"B");
+    long long n,sum=0;
+    while(cin>>n){
+        cout<<solve(n)<<"\n";
     }
 }
